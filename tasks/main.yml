@@ -1,2 +1,4 @@
 ---
 # tasks file for sec_configuration/
+- include_tasks: remove_sudo_capabilities/main.yml
+  when: remove_sudo_capabilities|bool

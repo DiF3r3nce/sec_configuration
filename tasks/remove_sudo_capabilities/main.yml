@@ -1,0 +1,20 @@
+---
+# tasks file for sec_configuration/
+- name: Fetch users in the 'sudo' group
+  command: grep '^sudo:.*$' /etc/group
+  register: sudo_users
+  changed_when: false
+  check_mode: no
+
+- name: Remove all users from the 'sudo' group using Linux command
+  command: gpasswd -d {{ item }} sudo
+  loop: "{{ (sudo_users.stdout | regex_replace('sudo:x:\\d+:', '')).split(',') }}"
+  when: sudo_users.stdout != "" and remove_sudo_capabilities | bool
+  notify: User removed from sudo group
+  ignore_errors: no  # Optional: Use if you want to continue despite errors in removing some users.
+  register: removal_results
+
+- name: Set fact for successfully removed users
+  set_fact:
+    removed_users: "{{ removal_results.results | selectattr('rc', 'equalto', 0) | map(attribute='item') | list }}"
+  when: removal_results is defined and removal_results.results | length > 0

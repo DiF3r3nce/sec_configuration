@@ -1,2 +1,3 @@
 ---
 # defaults file for sec_configuration/
+remove_sudo_capabilities: false
