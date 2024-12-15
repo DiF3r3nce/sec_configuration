@@ -1,0 +1,22 @@
+---
+# tasks file for sec_configuration/
+- name: Check and set 'PasswordAuthentication' to 'no' in 'sshd_config'
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^\s*PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+        backrefs: yes
+        state: present
+      when: disable_ssh | bool
+      notify:
+        - Restart SSH service using systemctl
+
+- name: Add exception for 'emaccount' user if password auth is disabled
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: 'Match User emaccount\n    PasswordAuthentication yes'
+        insertafter: EOF
+        state: present
+      when: disable_ssh | bool
+      notify:
+        - Restart SSH service using systemctl
