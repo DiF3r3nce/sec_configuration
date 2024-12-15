@@ -1,0 +1,10 @@
+---
+# tasks file for sec_configuration/
+- name: Disable SSH root login if locked
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PermitRootLogin'
+    line: 'PermitRootLogin no'
+    state: present
+  when: ssh_root_locked | bool
+  notify: restart sshd

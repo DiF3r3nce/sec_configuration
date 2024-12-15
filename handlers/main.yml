@@ -4,3 +4,9 @@
   debug:
     msg: "Users removed from sudo group: {{ removed_users | default('No users were removed.', true) }}"
   when: removed_users is defined and removed_users | length > 0
+
+- name: restart ssh if that's possible
+  service:
+    name: sshd
+    state: restarted
+  ignore_errors: yes
