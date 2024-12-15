@@ -15,7 +15,7 @@
   notify:
     - Restart SSH service using systemctl
 
-- name: Wait for 10 seconds
+- name: Wait for 5 seconds
   ansible.builtin.wait_for:
     timeout: 5    
 
