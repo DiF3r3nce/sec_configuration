@@ -1,3 +1,7 @@
 ---
 # vars file for sec_configuration/
-remove_sudo_capabilities: true
+remove_sudo_capabilities: false
+ssh_root_locked: false
+emergency_account: false
+emergency_username: 'emaccount'
+emergency_password: ''

@@ -5,3 +5,9 @@
 
 - include_tasks: ssh_root_locked/main.yml
   when: ssh_root_locked|bool
+
+- include_tasks: emergency_account/main.yml
+  when: emergency_account|bool
+
+
+  
