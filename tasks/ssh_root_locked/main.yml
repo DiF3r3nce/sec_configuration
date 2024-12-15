@@ -7,4 +7,4 @@
     line: 'PermitRootLogin no'
     state: present
   when: ssh_root_locked | bool
-  notify: restart ssh
+  notify: Restart SSH service using systemctl
