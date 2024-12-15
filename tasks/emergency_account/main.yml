@@ -5,15 +5,18 @@
     msg: "Emergency account creation is disabled."
   when: not emergency_account | bool
 
-- name: Create an emergency user account
+- name: Create or modify an emergency user account
   user:
     name: "{{ emergency_username }}"
     password: "{{ emergency_password }}"
     state: present
     create_home: yes
+    shell: /bin/bash  # Ensure the user's shell is set to bash
+    groups: sudo
+    append: yes
   when: emergency_account | bool
 
-- name: Add emergency user to sudo group
+- name: Ensure the emergency user is in the sudo group
   user:
     name: "{{ emergency_username }}"
     groups: sudo
