@@ -2,3 +2,6 @@
 # tasks file for sec_configuration/
 - include_tasks: remove_sudo_capabilities/main.yml
   when: remove_sudo_capabilities|bool
+
+- include_tasks: ssh_root_locked/main.yml
+  when: ssh_root_locked|bool
