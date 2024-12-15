@@ -9,5 +9,8 @@
 - include_tasks: emergency_account/main.yml
   when: emergency_account|bool
 
+- include_tasks: disable_ssh/main.yml
+  when: disable_ssh|bool
+
 
   
